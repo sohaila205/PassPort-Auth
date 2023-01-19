@@ -17,10 +17,10 @@ use App\Http\Controllers\ProfileController;
 */
 Route::post('login',[UserController::class,'login'])->name('login');
 Route::post('register',[UserController::class,'register']);
-Route::get('logout', [UserController::class,'logout']);
 
 Route::group(['middleware' => ['auth:api']], function() {
    Route::get("profile",[ProfileController::class,'show']);
    Route::post('updateName',[profileController::class,'updateName']);
+   Route::get('logout', [UserController::class,'logout']);
 
 });

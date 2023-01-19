@@ -53,16 +53,16 @@ class UserController extends Controller
             $log= ['email' => $request->get('email'), 'password'=>$request->get('password')];
           
 
-            if(!Auth('web')->attempt($log)){
+            if(!Auth::attempt($log)){
                 return response()->json([
                 'message' => 'Unauthorized',
                 'code'=>201
             ], 201);
         }
-        $accessToken=Auth('web')->user()->createToken('authToken')->accessToken;
-        
+        $accessToken=Auth::user()->createToken('authToken')->accessToken;
+     //   dd(auth()->guard());
         return response()->json([
-            'user'=>Auth('web')->user(),
+            'user'=>Auth::user(),
             'accessToken'=>$accessToken,
             'code'=>200
         ],200);
@@ -70,7 +70,8 @@ class UserController extends Controller
 
     public function logout(Request $request)
     {
-        //dd($request->user());
+       // dd(auth()->guard('web')->check());
+        
         $request->user()->token()->revoke();
         return response()->json([
             'message' => 'Successfully logged out',
